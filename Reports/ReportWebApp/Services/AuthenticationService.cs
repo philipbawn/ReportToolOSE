@@ -93,11 +93,22 @@ namespace ReportwebApp.Services
             ReportUser user = _wrapper.ReportUserRepository.GetOne<ReportUser>(f => f.Username == username);
             if (user == null)
             {
-                ReportUser newUser = new ReportUser();
-                newUser.PasswordHash = HashPassword(password);
-                newUser.Username = username;
-                _wrapper.ReportUserRepository.AddOne<ReportUser>(newUser);
-                user = newUser;
+                long usercount = _wrapper.ReportUserRepository.Count<ReportUser>(c => c.Id != null);
+                if (usercount == 0)
+                {
+                    ReportUser newUser = new ReportUser();
+                    newUser.PasswordHash = HashPassword(password);
+                    newUser.Username = username;
+                    newUser.IsOrganizationAdmin = true;
+                    newUser.OrganizationRoles = new List<string>();
+                    newUser.OrganizationRoles.Add("ToolAdmin");
+                    _wrapper.ReportUserRepository.AddOne<ReportUser>(newUser);
+                    user = newUser;
+                }
+                else
+                {
+                    return false;
+                }
             }
             if (VerifyPassword(password, user.PasswordHash))
             {

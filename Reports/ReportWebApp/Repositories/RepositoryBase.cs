@@ -10,7 +10,7 @@ namespace ReportWebApp.Repositories
     {
         private readonly IMongoClient _client;
 
-        public RepositoryBase(IMongoClient client) : base(client.GetDatabase("SpacePlanets"))
+        public RepositoryBase(IMongoClient client) : base(client.GetDatabase("Reports"))
         {
             _client = client;
         }
