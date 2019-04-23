@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.ApplicationInsights.AspNetCore;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.AspNetCore.Hosting.Internal;
 
 namespace ReportWebApp
 {
