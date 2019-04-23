@@ -13,7 +13,6 @@ using Microsoft.ApplicationInsights.AspNetCore;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Hosting.Internal;
-using Bawn.EventFlowClient;
 
 namespace ReportWebApp
 {
@@ -29,8 +28,8 @@ namespace ReportWebApp
 
         public static IWebHost BuildWebHost(string[] args, DiagnosticPipeline eventFlow) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureServices(services => services.AddSingleton<ITelemetryProcessorFactory>(sp => new EventFlowTelemetryProcessorFactory(eventFlow)))
-                .UseStartup<Startup>()
+            .ConfigureServices(services => services.AddSingleton<ITelemetryProcessorFactory>(sp => new EventFlowTelemetryProcessorFactory(eventFlow)))
+            .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
 
@@ -73,7 +72,7 @@ namespace ReportWebApp
             };
             var healthReporter = new CsvHealthReporter(new CsvHealthReporterConfiguration());
             var aiInput = new ApplicationInsightsInputFactory().CreateItem(null, healthReporter);
-            var aiFilters = new DefaultFilterFactory().CreateItem(filterConfig, healthReporter);
+            var aiFilters = new CustomFilterFactory().CreateItem(filterConfig, healthReporter);
             var inputs = new IObservable<EventData>[] { aiInput };
             var filters = new IFilter[] { aiFilters };
 
