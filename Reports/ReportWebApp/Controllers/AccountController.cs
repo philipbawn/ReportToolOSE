@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReportwebApp.Services;
 using ReportWebApp.Models;
+using ReportWebApp.Models.Documents;
 using ReportWebApp.Models.ServiceResponse;
 using ReportWebApp.Models.ViewModels;
 using System;

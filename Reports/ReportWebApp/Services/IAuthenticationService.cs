@@ -1,4 +1,4 @@
-﻿using ReportWebApp.Models;
+﻿using ReportWebApp.Models.Documents;
 using ReportWebApp.Models.ServiceResponse;
 using System;
 using System.Collections.Generic;

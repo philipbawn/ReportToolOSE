@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 using ReportWebApp.Helpers;
-using ReportWebApp.Models;
+using ReportWebApp.Models.Documents;
 using ReportWebApp.Models.ServiceResponse;
 using ReportWebApp.Repositories;
 using System;

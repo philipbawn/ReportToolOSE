@@ -1,5 +1,5 @@
 ﻿using MongoDB.Driver;
-using ReportWebApp.Models;
+using ReportWebApp.Models.Documents;
 using System;
 using System.Collections.Generic;
 using System.Text;
