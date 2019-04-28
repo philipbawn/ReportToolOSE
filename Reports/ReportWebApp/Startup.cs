@@ -35,10 +35,10 @@ namespace ReportWebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            var client = new MongoClient("mongodb://localhost:27017/");
+            var client = new MongoClient(Configuration["MongoDB:ConnectionString"]);
             services.AddSingleton<IMongoClient>(c => client);
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IDiscordService, DiscordService>();
+            services.AddScoped<IDiscordService>(d => new DiscordService(Configuration["Discord:clientId"], Configuration["Discord:clientSecret"]));
 
             services.AddCookieManager(options =>
                 {
