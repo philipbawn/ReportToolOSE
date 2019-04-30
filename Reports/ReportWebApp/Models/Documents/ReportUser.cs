@@ -12,6 +12,6 @@ namespace ReportWebApp.Models.Documents
         public string PasswordHash { get; set; }
         public bool IsOrganizationAdmin { get; set; }
         public List<string> OrganizationRoles { get; set; }
-
+        public string DiscordId { get; set; }
     }
 }

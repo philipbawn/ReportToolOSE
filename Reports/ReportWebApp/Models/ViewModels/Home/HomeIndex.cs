@@ -10,7 +10,7 @@ namespace ReportWebApp.Models.ViewModels.Home
     {
         public HomeIndex(IDiscordService discordService)
         {
-            this.Message = discordService.GetSigninUri("abcdefg", "https://localhost:5001/signin-discord", "identify guild");
+            this.Message = discordService.GetSigninUri();
         }
         public string Message { get; set; }
     }
