@@ -17,7 +17,7 @@ namespace ReportWebApp.Models.ViewModels.Discord
         public Signin(IDiscordService discordService, string code, IAuthenticationService authenticationService, string sessionId)
         {
             AccessTokenResponse response = discordService.GetAccessTokenWithCode(code);
-            Message = response.access_token + " expires in " + response.expires_in;
+            Message = "This service retrieved an access token on your behalf from discord. It expires in " + response.expires_in + " seconds. This application can use it to retrieve your discord username, id, and guild membership. The application does not yet store the token for these purposes. It's a work in progress.";
         }
     }
 }
