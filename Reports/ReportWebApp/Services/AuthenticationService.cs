@@ -171,11 +171,11 @@ namespace ReportWebApp.Services
         public bool SystemShouldAutoCreateAccounts()
         {
             var settings = _wrapper.ApplicationSettingRepository.GetOne<ApplicationSetting>(f => f.SettingsType == "Default");
-            if (settings != null && settings.AutoCreateAccountsForAnyone == true)
+            if (settings != null)
             {
-                return true;
+                return settings.AutoCreateAccountsForAnyone;
             }
-            return false;
+            return true;
         }
 
     }
