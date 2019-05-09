@@ -10,5 +10,7 @@ namespace ReportWebApp.Repositories
         IRepositoryBase<ReportUser> ReportUserRepository { get; }
         IRepositoryBase<WebSession> WebSessionRepository { get; }
 
+        IRepositoryBase<ApplicationSetting> ApplicationSettingRepository { get; }
+
     }
 }

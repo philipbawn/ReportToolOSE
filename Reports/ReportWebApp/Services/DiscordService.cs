@@ -36,5 +36,15 @@ namespace ReportWebApp.Services
             AccessTokenResponse response = JsonConvert.DeserializeObject<AccessTokenResponse>(httpResponse.Content.ReadAsStringAsync().Result);
             return response;
         }
+
+        public MeResponse GetMeResponse(string bearerToken)
+        {
+            string meUri = "https://discordapp.com/api/users/@me";
+            MeResponse response = meUri.WithOAuthBearerToken(bearerToken)
+                .GetJsonAsync<MeResponse>().Result;
+            return response;
+        }
+
+
     }
 }

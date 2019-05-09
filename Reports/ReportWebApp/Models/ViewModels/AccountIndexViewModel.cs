@@ -7,6 +7,6 @@ namespace ReportWebApp.Models.ViewModels
 {
     public class AccountIndexViewModel
     {
-        public string Message { get; set; }
+        public string CurrentUsername { get; set; }
     }
 }

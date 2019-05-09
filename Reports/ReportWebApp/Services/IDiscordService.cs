@@ -11,5 +11,8 @@ namespace ReportWebApp.Services
         string GetSigninUri();
 
         AccessTokenResponse GetAccessTokenWithCode(string code);
+
+
+        MeResponse GetMeResponse(string bearerToken);
     }
 }

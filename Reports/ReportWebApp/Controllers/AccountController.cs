@@ -1,11 +1,11 @@
 ﻿using CookieManager;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ReportwebApp.Services;
 using ReportWebApp.Models;
 using ReportWebApp.Models.Documents;
 using ReportWebApp.Models.ServiceResponse;
 using ReportWebApp.Models.ViewModels;
+using ReportWebApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,12 +20,14 @@ namespace ReportWebApp.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly ICookie _cookie;
         private readonly ICookieManager _cookieManager;
+        private readonly IDiscordService _discordService;
 
-        public AccountController(IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager)
+        public AccountController(IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager, IDiscordService discordService)
         {
             _authenticationService = authenticationService;
             _cookie = cookie;
             _cookieManager = cookieManager;
+            _discordService = discordService;
         }
 
         public IActionResult Index()
@@ -41,7 +43,7 @@ namespace ReportWebApp.Controllers
                 GetReportUserByCookieResponse reportUserByCookie = _authenticationService.GetReportUserByWebCookie(sessionId);
                 if (reportUserByCookie.Success == true)
                 {
-                    viewModel.Message = "Welcome, " + reportUserByCookie.User.Username;
+                    viewModel.CurrentUsername = reportUserByCookie.User.Username;
                 }
                 else
                 {
@@ -52,8 +54,10 @@ namespace ReportWebApp.Controllers
         }
         public IActionResult Login()
         {
-            _cookie.Remove("ReportSession");
-            return View();
+            var viewModel = new LoginViewModel(_discordService);
+            // TODO: re-assess whether we need this?
+            // _cookie.Remove("ReportSession");
+            return View(viewModel);
         }
 
         public IActionResult Logout()

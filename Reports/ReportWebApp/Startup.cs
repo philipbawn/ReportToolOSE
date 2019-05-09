@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
-using ReportwebApp.Services;
 using ReportWebApp.Services;
 
 namespace ReportWebApp

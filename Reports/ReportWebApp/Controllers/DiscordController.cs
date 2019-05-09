@@ -1,6 +1,6 @@
 ﻿using CookieManager;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ReportwebApp.Services;
 using ReportWebApp.Services;
 using System;
 using System.Collections.Generic;
@@ -29,6 +29,8 @@ namespace ReportWebApp.Controllers
         {
             string sessionId = _cookie.Get("ReportSession");
             var viewModel = new ReportWebApp.Models.ViewModels.Discord.Signin(this.discordService, code, this.authService, sessionId);
+            _cookie.Set("ReportSession", viewModel.NewSessionCookie, new CookieOptions() { HttpOnly = true, Expires = DateTime.UtcNow.AddDays(13) });
+
             return View(viewModel);
         }
 

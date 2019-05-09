@@ -12,7 +12,7 @@ namespace ReportWebApp.Repositories
 
         private IRepositoryBase<ReportUser> reportUserRepository;
         private IRepositoryBase<WebSession> webSessionRepository;
-
+        private IRepositoryBase<ApplicationSetting> applicationSettingRepository;
 
         public RepositoryWrapper(IMongoClient mongoClient)
         {
@@ -40,6 +40,18 @@ namespace ReportWebApp.Repositories
                     this.webSessionRepository = new RepositoryBase<WebSession>(_mongoClient);
                 }
                 return this.webSessionRepository;
+            }
+        }
+
+        public IRepositoryBase<ApplicationSetting> ApplicationSettingRepository
+        {
+            get
+            {
+                if (this.applicationSettingRepository == null)
+                {
+                    this.applicationSettingRepository = new RepositoryBase<ApplicationSetting>(_mongoClient);
+                }
+                return this.applicationSettingRepository;
             }
         }
     }
