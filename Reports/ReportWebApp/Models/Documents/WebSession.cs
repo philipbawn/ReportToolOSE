@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReportWebApp.Models
+namespace ReportWebApp.Models.Documents
 {
     public class WebSession : MongoDbGenericRepository.Models.Document
     {

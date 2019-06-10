@@ -1,3 +1,5 @@
+@model ReportWebApp.Models.ViewModels.LoginViewModel
+
 @{
     ViewData["Title"] = "Log in to your account";
 }
@@ -15,5 +17,8 @@
             </label>
             <button type="submit" class="btn btn-primary" value="Login">Log In</button>
         </form>
+        <hr />
+        <h2>Second option</h2>
+        <p><a class="btn btn-outline-primary" href="@Model.Message">Sign in with discord</a></p>
     </div>
 </div>

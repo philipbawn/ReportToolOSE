@@ -6,6 +6,6 @@
 
 <h1>Index</h1>
 
-<p>@Model.Message</p>
+<p>Your username is <span class="badge badge-info">@Model.CurrentUsername</span>. This will be changeable.</p>
 
-<a href="@Url.Action("Logout", "Account")">Log out of this account</a>
+<a class="btn btn-outline-danger" href="@Url.Action("Logout", "Account")"><i aria-hidden="true" class="fas fa-door-open"> </i>Log out of this account</a>

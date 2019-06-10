@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
-using ReportwebApp.Services;
+using ReportWebApp.Services;
 
 namespace ReportWebApp
 {
@@ -34,9 +34,10 @@ namespace ReportWebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            var client = new MongoClient("mongodb://localhost:27017/Reports");
+            var client = new MongoClient(Configuration["MongoDB:ConnectionString"]);
             services.AddSingleton<IMongoClient>(c => client);
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IDiscordService>(d => new DiscordService(Configuration["Discord:clientId"], Configuration["Discord:clientSecret"], Configuration["Discord:redirectUri"]));
 
             services.AddCookieManager(options =>
                 {

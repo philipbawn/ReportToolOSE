@@ -1,6 +1,7 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using ReportWebApp.Helpers;
-using ReportWebApp.Models;
+using ReportWebApp.Models.Documents;
 using ReportWebApp.Models.ServiceResponse;
 using ReportWebApp.Repositories;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ReportwebApp.Services
+namespace ReportWebApp.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
@@ -50,6 +51,35 @@ namespace ReportwebApp.Services
             }
             return false;
         }
+
+        public string CreateWebSessionFromDiscordId(string discordUserId)
+        {
+            ReportUser reportUser = _wrapper.ReportUserRepository.GetOne<ReportUser>(f => f.DiscordId == discordUserId);
+            if (reportUser != null)
+            {
+                WebSession webSession = this.CreateWebSession(reportUser.Username);
+                return webSession.SessionCookie;
+            }
+            else
+            {
+                if (SystemShouldAutoCreateAccounts())
+                {
+                    ReportUser newUser = new ReportUser();
+                    newUser.PasswordHash = HashPassword(GenerationHelper.CreateRandomString(true, true, false, 20));
+                    newUser.Username = discordUserId;
+                    newUser.IsOrganizationAdmin = false;
+                    newUser.OrganizationRoles = new List<string>();
+                    _wrapper.ReportUserRepository.AddOne<ReportUser>(newUser);
+                    WebSession webSession = this.CreateWebSession(newUser.Username);
+                    return webSession.SessionCookie;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+
 
         /// <summary>
         /// Creates a new web session and return it for a given user.
@@ -107,7 +137,20 @@ namespace ReportwebApp.Services
                 }
                 else
                 {
-                    return false;
+                    if (SystemShouldAutoCreateAccounts())
+                    {
+                        ReportUser newUser = new ReportUser();
+                        newUser.PasswordHash = HashPassword(password);
+                        newUser.Username = username;
+                        newUser.IsOrganizationAdmin = false;
+                        newUser.OrganizationRoles = new List<string>();
+                        _wrapper.ReportUserRepository.AddOne<ReportUser>(newUser);
+                        user = newUser;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             if (VerifyPassword(password, user.PasswordHash))
@@ -116,6 +159,23 @@ namespace ReportwebApp.Services
             }
             return false;
 
+        }
+
+        public void AssociateUserWithDiscordId(Guid reportUserId, string discordUserId)
+        {
+            var existing = _wrapper.ReportUserRepository.GetOne<ReportUser>(f => f.Id == reportUserId);
+            existing.DiscordId = discordUserId;
+            _wrapper.ReportUserRepository.UpdateOne<ReportUser>(existing);
+        }
+
+        public bool SystemShouldAutoCreateAccounts()
+        {
+            var settings = _wrapper.ApplicationSettingRepository.GetOne<ApplicationSetting>(f => f.SettingsType == "Default");
+            if (settings != null)
+            {
+                return settings.AutoCreateAccountsForAnyone;
+            }
+            return true;
         }
 
     }
