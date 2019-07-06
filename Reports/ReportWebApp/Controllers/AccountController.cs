@@ -52,6 +52,33 @@ namespace ReportWebApp.Controllers
             }
             return View(viewModel);
         }
+
+
+        public IActionResult DraftReport()
+        {
+            var viewModel = new AccountDraftReportViewModel();
+            string sessionId = _cookie.Get("ReportSession");
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                GetReportUserByCookieResponse reportUserByCookie = _authenticationService.GetReportUserByWebCookie(sessionId);
+                if (reportUserByCookie.Success == true)
+                {
+                    viewModel.CurrentUsername = reportUserByCookie.User.Username;
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            return View(viewModel);
+        }
+
+
+
         public IActionResult Login()
         {
             var viewModel = new LoginViewModel(_discordService);

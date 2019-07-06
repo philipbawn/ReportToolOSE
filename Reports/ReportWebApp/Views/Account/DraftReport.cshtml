@@ -1,0 +1,18 @@
+﻿@model ReportWebApp.Models.ViewModels.AccountDraftReportViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Draft Report</h1>
+
+<form method="POST" action="@Url.Action("DraftReport", "Account")">
+    <label for="forDate">Date your report:<input id="forDate" name="forDate" type="date" /></label>
+    <br />
+    <label for="affectedPeople">Affected people: <input type="text" id="affectedPeople" name="affectedPeople" /></label><br />
+    <label for="narrative">Narrative:</label><br />
+    <textarea rows="8" cols="80" name="narrative" id="narrative" /></textarea>
+    <br />
+    <button class="btn btn-outline-primary" type="submit" value="Save Report" />
+    
+</form>

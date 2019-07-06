@@ -7,10 +7,11 @@ namespace ReportWebApp.Repositories
 {
     public interface IRepositoryWrapper
     {
-        IRepositoryBase<ReportUser> ReportUserRepository { get; }
-        IRepositoryBase<WebSession> WebSessionRepository { get; }
-
         IRepositoryBase<ApplicationSetting> ApplicationSettingRepository { get; }
+        IRepositoryBase<ActivityReport> ActivityReportRepository { get; }
+        IRepositoryBase<ReportUser> ReportUserRepository { get; }
+        IRepositoryBase<TokenAwardRecord> TokenAwardRecordRepository { get; }
+        IRepositoryBase<WebSession> WebSessionRepository { get; }
 
     }
 }
