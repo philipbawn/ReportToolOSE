@@ -37,6 +37,7 @@ namespace ReportWebApp
             var client = new MongoClient(Configuration["MongoDB:ConnectionString"]);
             services.AddSingleton<IMongoClient>(c => client);
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IActivityReportService, ActivityReportService>();
             services.AddScoped<IDiscordService>(d => new DiscordService(Configuration["Discord:clientId"], Configuration["Discord:clientSecret"], Configuration["Discord:redirectUri"]));
 
             services.AddCookieManager(options =>

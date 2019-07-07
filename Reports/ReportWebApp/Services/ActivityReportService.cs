@@ -24,6 +24,18 @@ namespace ReportWebApp.Services
             _wrapper = new RepositoryWrapper(_mongoClient);
         }
 
+        public void SaveActivity(Guid reporterId, DateTime activityDate, int minutes, bool ingameActivity, string affectedPeople, string narrative)
+        {
+            ActivityReport activityReport = new ActivityReport();
+            activityReport.ReportUserId = reporterId;
+            activityReport.Online = ingameActivity;
+            activityReport.ForDate = activityDate;
+            activityReport.Affected = affectedPeople;
+            activityReport.Minutes = minutes;
+            activityReport.Narrative = narrative;
+            _wrapper.ActivityReportRepository.AddOne<ActivityReport>(activityReport);
+        }
+
         public int CountActivity(Guid reportUserId, DateTime dateOfCount, bool onlineOnly)
         {
             List<ActivityReport> activityReports = new List<ActivityReport>();

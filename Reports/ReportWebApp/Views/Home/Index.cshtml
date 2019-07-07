@@ -6,5 +6,14 @@
 
 <div class="text-center">
     <h1 class="display-4">Report tool</h1>
-    <p><a class="btn btn-outline-primary" href="@Model.Message">Sign in with discord</a></p>
+    @if (Model.NeedToSignIn == true)
+    {
+        <h2>You are not logged in</h2>
+        <p><a class="btn btn-outline-primary" href="@Model.DiscordSigninUrl">Sign in with discord</a></p>
+    }
+    else
+    {
+        <h2>Logged In</h2>
+        <a class="btn btn-outline-primary" href="@Url.Action("DraftReport","Account")">Submit activity reports</a>
+    }
 </div>
