@@ -1,6 +1,7 @@
 ﻿using CookieManager;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using ReportWebApp.Models;
 using ReportWebApp.Models.Documents;
 using ReportWebApp.Models.ServiceResponse;
@@ -22,14 +23,16 @@ namespace ReportWebApp.Controllers
         private readonly ICookieManager _cookieManager;
         private readonly IDiscordService _discordService;
         private readonly IActivityReportService _activityReportService;
+        private IConfiguration _configuration;
 
-        public AccountController(IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager, IDiscordService discordService, IActivityReportService activityReportService)
+        public AccountController(IAuthenticationService authenticationService, ICookie cookie, ICookieManager cookieManager, IDiscordService discordService, IActivityReportService activityReportService, IConfiguration configuration)
         {
             _authenticationService = authenticationService;
             _cookie = cookie;
             _cookieManager = cookieManager;
             _discordService = discordService;
             _activityReportService = activityReportService;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -134,7 +137,7 @@ namespace ReportWebApp.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel(_configuration) { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
     }

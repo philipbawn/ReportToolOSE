@@ -1,6 +1,7 @@
 ﻿using CookieManager;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using ReportWebApp.Services;
 using System;
 using System.Collections.Generic;
