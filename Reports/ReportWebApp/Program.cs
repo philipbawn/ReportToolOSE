@@ -29,8 +29,9 @@ namespace ReportWebApp
             WebHost.CreateDefaultBuilder(args)
             .ConfigureServices(services => services.AddSingleton<ITelemetryProcessorFactory>(sp => new EventFlowTelemetryProcessorFactory(eventFlow)))
             .UseStartup<Startup>()
-                .UseApplicationInsights()
-                .Build();
+            .UseSentry()
+            .UseApplicationInsights()
+            .Build();
 
         private static DiagnosticPipeline CreateEventFlow(string[] args)
         {
