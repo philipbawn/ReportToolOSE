@@ -10,8 +10,10 @@ namespace ReportWebApp.Models.ViewModels.Home
     {
         public HomeIndex(IDiscordService discordService)
         {
-            this.Message = discordService.GetSigninUri();
+            this.DiscordSigninUrl = discordService.GetSigninUri();
         }
-        public string Message { get; set; }
+        public string DiscordSigninUrl { get; set; }
+
+        public bool NeedToSignIn { get; set; }
     }
 }

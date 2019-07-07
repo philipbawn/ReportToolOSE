@@ -1,0 +1,21 @@
+﻿@model ReportWebApp.Models.ViewModels.AccountDraftReportViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Draft Report</h1>
+
+<form method="POST" action="@Url.Action("SaveReport", "Account")">
+    <label for="forDate">Date your report:<input id="forDate" name="forDate" type="date" class="form-control" autofocus /></label>
+    <br />
+    <label for="timeSpent">Time spent (minutes): <input class="form-control" id="timeSpent" name="timeSpent" type="number" min="0" /></label><br />
+    <label><input type="radio" name="online" value="true" checked> Online (in game)<br></label><br />
+    <label><input type="radio" name="online" value="false"> Offline<br></label><br />
+    <label for="affectedPeople">Affected people: <input type="text" id="affectedPeople" name="affectedPeople" autocomplete="off" /></label><br />
+    <label for="narrative">Narrative:</label><br />
+    <textarea rows="8" cols="80" name="narrative" id="narrative" placeholder="Place report body here"></textarea>
+    <br />
+    <button class="btn btn-outline-primary" type="submit" value="Save Report">Save Report</button>
+
+</form>

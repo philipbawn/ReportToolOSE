@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using CookieManager;
 using Microsoft.AspNetCore.Mvc;
 using ReportWebApp.Models;
+using ReportWebApp.Models.ServiceResponse;
 using ReportWebApp.Services;
 
 namespace ReportWebApp.Controllers
@@ -13,16 +15,32 @@ namespace ReportWebApp.Controllers
     {
         private readonly IAuthenticationService authService;
         private readonly IDiscordService discordService;
+        private readonly ICookie _cookie;
+        private readonly ICookieManager _cookieManager;
 
-        public HomeController(IAuthenticationService authenticationService, IDiscordService discordService)
+        public HomeController(IAuthenticationService authenticationService, IDiscordService discordService, ICookie cookie, ICookieManager cookieManager)
         {
             this.authService = authenticationService;
             this.discordService = discordService;
+            _cookie = cookie;
+            _cookieManager = cookieManager;
         }
 
         public IActionResult Index()
         {
             var viewModel = new ReportWebApp.Models.ViewModels.Home.HomeIndex(this.discordService);
+
+            string sessionId = _cookie.Get("ReportSession");
+            GetReportUserByCookieResponse reportUserByCookie = authService.GetReportUserByWebCookie(sessionId);
+            if (reportUserByCookie.Success == true)
+            {
+                viewModel.NeedToSignIn = false;
+            }
+            else
+            {
+                viewModel.NeedToSignIn = true;
+            }
+
             return View(viewModel);
         }
 

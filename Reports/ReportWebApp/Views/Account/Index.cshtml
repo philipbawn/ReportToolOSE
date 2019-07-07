@@ -6,6 +6,11 @@
 
 <h1>Index</h1>
 
-<p>Your username is <span class="badge badge-info">@Model.CurrentUsername</span>. This will be changeable.</p>
-
+<p>
+    Your username is <span class="badge badge-info">@Model.CurrentUsername</span><br />
+    You have completed @Model.AllThisMonth total minutes this month, @Model.IngameThisMonth were ingame.
+</p>
+<br />
+<a href="@Url.Action("Preferences", "Account")">Account settings</a>
+<p><a href="@Url.Action("DraftReport", "Account")">Draft a new report</a></p>
 <a class="btn btn-outline-danger" href="@Url.Action("Logout", "Account")"><i aria-hidden="true" class="fas fa-door-open"> </i>Log out of this account</a>

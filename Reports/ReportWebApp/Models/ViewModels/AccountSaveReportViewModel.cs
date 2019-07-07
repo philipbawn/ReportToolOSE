@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace ReportWebApp.Models.ViewModels
 {
-    public class AccountIndexViewModel
+    public class AccountSaveReportViewModel
     {
         public string CurrentUsername { get; set; }
-        public int AllThisMonth { get; set; }
-        public int IngameThisMonth { get; set; }
+        public string Message { get; set; }
     }
 }

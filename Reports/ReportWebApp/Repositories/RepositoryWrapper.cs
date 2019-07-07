@@ -10,13 +10,39 @@ namespace ReportWebApp.Repositories
     {
         private readonly IMongoClient _mongoClient;
 
-        private IRepositoryBase<ReportUser> reportUserRepository;
-        private IRepositoryBase<WebSession> webSessionRepository;
         private IRepositoryBase<ApplicationSetting> applicationSettingRepository;
+        private IRepositoryBase<ActivityReport> activityReportRepository;
+        private IRepositoryBase<ReportUser> reportUserRepository;
+        private IRepositoryBase<TokenAwardRecord> tokenAwardRecordRepository;
+        private IRepositoryBase<WebSession> webSessionRepository;
 
         public RepositoryWrapper(IMongoClient mongoClient)
         {
             _mongoClient = mongoClient;
+        }
+
+        public IRepositoryBase<ActivityReport> ActivityReportRepository
+        {
+            get
+            {
+                if (this.activityReportRepository == null)
+                {
+                    this.activityReportRepository = new RepositoryBase<ActivityReport>(_mongoClient);
+                }
+                return this.activityReportRepository;
+            }
+        }
+
+        public IRepositoryBase<ApplicationSetting> ApplicationSettingRepository
+        {
+            get
+            {
+                if (this.applicationSettingRepository == null)
+                {
+                    this.applicationSettingRepository = new RepositoryBase<ApplicationSetting>(_mongoClient);
+                }
+                return this.applicationSettingRepository;
+            }
         }
 
         public IRepositoryBase<ReportUser> ReportUserRepository
@@ -31,6 +57,18 @@ namespace ReportWebApp.Repositories
             }
         }
 
+        public IRepositoryBase<TokenAwardRecord> TokenAwardRecordRepository
+        {
+            get
+            {
+                if (this.tokenAwardRecordRepository == null)
+                {
+                    this.tokenAwardRecordRepository = new RepositoryBase<TokenAwardRecord>(_mongoClient);
+                }
+                return this.tokenAwardRecordRepository;
+            }
+        }
+
         public IRepositoryBase<WebSession> WebSessionRepository
         {
             get
@@ -40,18 +78,6 @@ namespace ReportWebApp.Repositories
                     this.webSessionRepository = new RepositoryBase<WebSession>(_mongoClient);
                 }
                 return this.webSessionRepository;
-            }
-        }
-
-        public IRepositoryBase<ApplicationSetting> ApplicationSettingRepository
-        {
-            get
-            {
-                if (this.applicationSettingRepository == null)
-                {
-                    this.applicationSettingRepository = new RepositoryBase<ApplicationSetting>(_mongoClient);
-                }
-                return this.applicationSettingRepository;
             }
         }
     }
